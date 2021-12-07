@@ -23,7 +23,7 @@ module instruction_memory(
 
 	reg [12:0] o_instruction_memory [63:0]; 
 
-	always@(*) if(reset == 1'b1) $readmemb("o_instruction.txt",o_instruction_memory);
+	always@(*) if(reset == 1'b1) $readmemb("sample_instructions.txt",o_instruction_memory);
 
 	assign o_instruction = o_instruction_memory[i_PCcurr];
 endmodule
