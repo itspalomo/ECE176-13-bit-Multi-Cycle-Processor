@@ -19,6 +19,8 @@
 //
 //	STILL NOT WORKING AS INTENDED
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns/100ps
+
 module ALU(
 	input [3:0] opcode,
 	input [12:0] i_dataA,i_dataB,
@@ -34,13 +36,13 @@ module ALU(
 	localparam OR_ 		= 4'b0110;
 	localparam XOR_ 	= 4'b0111;
 	localparam J_ 		= 4'b1000;
-	localparam BEQ_		= 4'b1001;
-	localparam BGT_		= 4'b1010;
-	localparam BLT_		= 4'b1011;
-	localparam BNE_		= 4'b1100;
-	localparam SW_ 		= 4'b1101;
-	localparam LD_ 		= 4'b1110;
-	localparam LSL_		= 4'b1111;
+	localparam ADDi_ 	= 4'b1001;
+	localparam SUBi_	= 4'b1010;
+	localparam LSL_		= 4'b1011;
+	localparam BEQ_		= 4'b1100;
+	localparam BGT_		= 4'b1101;
+	localparam BLT_		= 4'b1110;
+	localparam BNE_		= 4'b1111;
 
 	always@(*) begin
 		case(opcode)
@@ -68,15 +70,15 @@ module ALU(
 			XOR_:begin  
 				o_result = i_dataA ^ i_dataB;
 			end
-			//J_: begin
-				// o_result = ;
-			//end
-			//LD_: begin
-				// o_result = ;
-			//end
-			//SW_: begin
-				// o_result = ;
-			//end
+			J_: begin
+				o_checkbranch = 1;
+			end
+			ADDi_: begin
+				o_result = i_dataA + i_dataB;
+			end
+			SUBi_: begin
+				o_result = i_dataA - i_dataB;
+			end
 			LSL_:begin  
 				o_result = i_dataA << i_dataB;
 			end

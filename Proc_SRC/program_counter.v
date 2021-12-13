@@ -17,16 +17,18 @@
 //				PCcurr - calculated input given PCop
 //	
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns/100ps
+
+
 module PC(
 	input clk,reset,i_PCop,i_PC,
-	input [5:0] i_Branch,
+	input [8:0] i_Branch,
 	output reg [12:0] o_PCcurr );
 
 	always@(posedge clk) begin
-		if(reset == 1'b1) o_PCcurr <= 12'b0000_000_000_000;
-		if(i_PC == 1'b1) begin
-			if(i_PCop == 1'b0) o_PCcurr <= o_PCcurr + 1;
-			else o_PCcurr <= i_Branch;
-		end
+		if(reset == 1'b1) o_PCcurr <= 13'b0000_000_000_000;
+		if(i_PCop == 1'b0) o_PCcurr <= o_PCcurr + 1;
+		else o_PCcurr <= i_PC + i_Branch;
+		
 	end			
 endmodule

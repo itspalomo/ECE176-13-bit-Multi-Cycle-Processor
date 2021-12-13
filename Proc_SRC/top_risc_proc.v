@@ -11,6 +11,7 @@
 //			
 //	
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns/100ps
 `include "ALU.v"
 `include "program_counter.v"
 `include "control.v"
@@ -47,14 +48,14 @@ module top_risc_proc(clk,reset);
 	 .i_dataA(w_dataA),
 	 .i_dataB(w_dataB),
 	 .o_result(w_ALUresult),
-	 o_checkbranch(w_checkbranch)
+	 .o_checkbranch(w_checkbranch)
 	 );
 
 	register_file u3(
 	 .clk(clk),
 	 .reset(reset),
 	 .i_memWrite(w_memWrite),
-	 .i_memRead(w_memRead);
+	 .i_memRead(w_memRead),
 	 .i_address1(w_regAddress1),
 	 .i_address2(w_regAddress2),
 	 .i_destReg(w_regDest),
