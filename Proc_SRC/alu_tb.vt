@@ -1,0 +1,24 @@
+`timescale 1ns/100ps
+
+
+module alu_tb();
+
+	localparam NOP 		= 4'b0000;
+	localparam ADD_ 	= 4'b0001;
+	localparam SUB_ 	= 4'b0010;
+	localparam MUL_ 	= 4'b0011;
+	localparam DIV_ 	= 4'b0100;
+	localparam AND_ 	= 4'b0101;
+	localparam OR_ 		= 4'b0110;
+	localparam XOR_ 	= 4'b0111;
+	localparam J_ 		= 4'b1000;
+	localparam BEQ_		= 4'b1001;
+	localparam BGT_		= 4'b1010;
+	localparam BLT_		= 4'b1011;
+	localparam BNE_		= 4'b1100;
+	localparam ADDi_ 	= 4'b1101;
+	localparam SUBi_	= 4'b1110;
+	localparam LSL_		= 4'b1111;
+
+
+endmodule

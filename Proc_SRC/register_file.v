@@ -20,6 +20,8 @@
 //				
 //	
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns/100ps
+
 module register_file(
 	input clk,reset,i_memWrite,i_memRead,
 	input [2:0] i_address1,i_address2,i_destReg,
@@ -30,8 +32,8 @@ module register_file(
 	reg [4:0] i ; 
 
 	initial begin 
-		for (i = 0; i < 7; i++) 
-		 memory[i] = 13’b0000_000_000_000; // registers initialized to 0
+		for (i = 0; i < 7; i = i + 1) 
+		 memory[i] = 13'b0000_000_000_000; // registers initialized to 0
 	end	
 
 	always@(posedge clk) begin

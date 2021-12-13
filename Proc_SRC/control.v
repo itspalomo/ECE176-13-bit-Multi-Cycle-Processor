@@ -29,6 +29,8 @@
 //							[opcode][offset]
 //							[12:9][8:0]
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns/100ps
+
 module control(
 	input clk,reset,i_checkbranch,
 	input [12:0] i_instruction,
@@ -44,14 +46,15 @@ module control(
 	localparam BRANCH_EXECUTE = 4;
 
 	reg [2:0] state;
+
 	always@(posedge clk) begin
 		if(reset == 1'b1) state <= 0;
 		case(state)
 			RESET_STATE: begin 
 				if(i_instruction[12:9] == 4'b0000) begin
 				o_PCop <= 0;
- 				o_PC <= 1;
-				state <= 1;
+				o_PC <= 0;
+				state <= FETCH;
 				end
 				else    o_PC <= ~o_PC;
 			end
@@ -64,26 +67,36 @@ module control(
 				o_memWrite    <= 0;
 				o_memRead     <= 0;
 				o_PCop      <= 0;
-				o_PC          <= 0;
-				state         <= 2;
+				state         <= DECODE;
 			end
 			DECODE: begin                    
-				if(i_instruction[12:11] == 2'b11) begin
+				if(i_instruction[12:9] == 4'b1000) begin
+					o_opcode      <= i_instruction[12:9];          
+					o_addr1       <= 0;           
+					o_addr2       <= 0;            
+					o_branch      <= i_instruction[8:0];            
+					o_destination <= 0;                    
+					o_memRead     <= 1;
+					o_PC 	      <= 0;
+					state         <= BRANCH_EXECUTE;           
+				end
+				else if(i_instruction[12:11] == 2'b11) begin
 					o_opcode      <= i_instruction[12:9];          
 					o_addr1       <= i_instruction[8:6];           
 					o_addr2       <= i_instruction[5:3];            
 					o_branch      <= i_instruction[2:0];            
 					o_destination <= 0;                    
 					o_memRead     <= 1;
-					state         <= 4;           
+					state         <= BRANCH_EXECUTE;           
 				end
-				else  begin
+				else begin
 					o_opcode      <= i_instruction[12:9];          
 					o_destination <= i_instruction[8:6];           				
 					o_addr1       <= i_instruction[5:3];            
 					o_addr2       <= i_instruction[2:0];            
 					o_memRead     <= 1;
-					o_branch      <= 0;                     
+					o_branch      <= 0; 
+					state 		<= MATH_EXECUTE;                    
 				end
 			end
 
@@ -92,15 +105,13 @@ module control(
 			MATH_EXECUTE: begin                
 				o_memWrite    <= 1;                      
 				o_memRead     <= 0;
-				o_PCop      <= 0;                     
-				o_PC          <= 1;                     
-				state         <= 1;                     
+				o_PCop      <= 0;                       
+				state         <= FETCH;                     
 			end
 			BRANCH_EXECUTE: begin                
 				o_memRead     <= 0; 
 				o_PCop      <= i_checkbranch;               
-				o_PC          <= 1;
-				state         <= 1;         
+				state         <= FETCH;         
 			end
 			default: state <= 0;
 		endcase
