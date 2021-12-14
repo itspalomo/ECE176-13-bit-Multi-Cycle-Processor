@@ -22,7 +22,7 @@
 `timescale 1ns/100ps
 
 module ALU(
-	input [3:0] opcode,
+	input [3:0] i_opcode,
 	input [12:0] i_dataA,i_dataB,
 	output reg [12:0] o_result,
 	output reg o_checkbranch);
@@ -45,7 +45,7 @@ module ALU(
 	localparam BNE_		= 4'b1111;
 
 	always@(*) begin
-		case(opcode)
+		case(i_opcode)
 			NOP:begin	
 				o_result = 0; //NOP
 			end
