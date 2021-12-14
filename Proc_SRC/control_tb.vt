@@ -1,0 +1,66 @@
+`timescale 1ns/100ps
+
+module control_tb();
+
+    reg clk;
+    reg reset;
+    reg i_checkbranch;
+    reg [12:0] i_instruction;
+    wire [3:0] o_opcode;                   
+    wire [2:0] o_destination,o_addr1,o_addr2;  
+    wire [4:0] o_branch;  
+    wire o_memWrite,o_memRead,o_PCop,o_PC;
+
+control uut(
+    .clk(clk),
+    .reset(reset),
+    .i_checkbranch(i_checkbranch),
+    .i_instruction(i_instruction),
+    .o_opcode(o_opcode),
+    .o_destination(o_destination),
+    .o_addr1(o_addr1),
+    .o_addr2(o_addr2),
+    .o_branch(o_branch),
+    .o_memWrite(o_memWrite),
+    .o_memRead(o_memRead),
+    .o_PCop(o_PCop),
+    .o_PC(o_PC));
+
+
+initial begin
+clk = 0;
+end
+
+always #2 clk = ~clk; 
+
+initial
+begin 
+
+reset = 0;
+i_checkbranch = 0;
+
+#20;
+    
+	i_checkbranch <= 0;
+	i_instruction <= 13'b0001011011011;  //ADD Operation
+	
+	#20;
+	
+	i_checkbranch <= 0;
+	i_instruction <= 13'b0011011011011;
+	
+	#20;
+	
+	i_checkbranch <= 0;
+	i_instruction <= 13'b0111011011011;
+	
+	#20;
+end
+
+
+
+
+endmodule
+    
+    
+

@@ -51,13 +51,10 @@ module control(
 		if(reset == 1'b1) state <= 0;
 		case(state)
 			RESET_STATE: begin 
-				if(i_instruction[12:9] == 4'b0000) begin
 				o_PCop <= 0;
 				o_PC <= 0;
 				state <= FETCH;
-				end
-				else    o_PC <= ~o_PC;
-			end
+				end                                     
 			FETCH: begin                    
 				o_opcode      <= 0;
 				o_addr1       <= 0;
