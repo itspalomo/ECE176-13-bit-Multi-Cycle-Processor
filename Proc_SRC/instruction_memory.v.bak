@@ -29,8 +29,7 @@ module instruction_memory(
 	always@(*)begin
 		 if(reset == 1'b1) $readmemb("sample_instructions.txt",o_instruction_memory);
 		 if(i_PCcurr[12:9] > 4'b0000) $display("Program Counter overflow!");
-		 $display("%b", i_PCcurr);
 	end
-	
+	$display("%b", i_PCcurr);
 	assign o_instruction = o_instruction_memory[i_PCcurr[8:0]];
 endmodule

@@ -1,0 +1,126 @@
+`timescale 1ns/100ps
+
+
+module alu_tb();
+
+	reg [3:0] opcode;
+	reg [12:0] dataA, dataB;
+	wire [12:0] result;
+	wire checkbranch;
+	
+	localparam NOP 		= 4'b0000;
+	localparam ADD_ 	= 4'b0001;
+	localparam SUB_ 	= 4'b0010;
+	localparam MUL_ 	= 4'b0011;
+	localparam DIV_ 	= 4'b0100;
+	localparam AND_ 	= 4'b0101;
+	localparam OR_ 		= 4'b0110;
+	localparam XOR_ 	= 4'b0111;
+	localparam J_ 		= 4'b1000;
+	localparam BEQ_		= 4'b1001;
+	localparam BGT_		= 4'b1010;
+	localparam BLT_		= 4'b1011;
+	localparam BNE_		= 4'b1100;
+	localparam ADDi_ 	= 4'b1101;
+	localparam SUBi_	= 4'b1110;
+	localparam LSL_		= 4'b1111;
+
+
+ALU u1(
+	.i_opcode(opcode),
+	.i_dataA(dataA),
+	.i_dataB(dataB),
+	.o_result(result),
+	.o_checkbranch(checkbranch));
+
+
+initial begin
+
+opcode = NOP;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = ADD_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_000_001_110;
+
+#10;
+opcode = SUB_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_000;
+
+#10;
+
+opcode = DIV_;
+dataA = 13'b0000_000_010_100;//20
+dataB = 13'b0000_000_000_100;//4
+
+#10;
+
+opcode = MUL_;
+dataA = 13'b0000_000_000_111;//7
+dataB = 13'b0000_000_000_010;//2
+
+#10;
+
+opcode = AND_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = XOR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = LSL_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+opcode = OR_;
+dataA = 13'b0000_110_001_001;
+dataB = 13'b0000_110_001_110;
+
+#10;
+
+end
+	
+
+
+endmodule

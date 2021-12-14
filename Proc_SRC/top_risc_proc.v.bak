@@ -74,11 +74,11 @@ module top_risc_proc(
 	 .o_destination(w_regDest),
 	 .o_addr1(w_regAddress1),
 	 .o_addr2(w_regAddress2),     
-	 .o_branch(w_branch),
-	 .o_PC(w_PC),                      
+	 .o_branch(w_branch),                      
 	 .o_memWrite(w_memWrite),
 	 .o_memRead(w_memRead),
-	 .o_PCop(w_PCop)
+	 .o_PCop(w_PCop),
+	 .o_PC(w_PC)
 	 ); 
 
 

@@ -54,8 +54,6 @@ module control(
 			RESET_STATE: begin 
 				o_PCop <= 0;
 				o_PC <= 0;
-				o_memWrite    <= 0;
-				o_memRead     <= 0;
 				state <= FETCH;
 				end                                     
 			FETCH: begin                    

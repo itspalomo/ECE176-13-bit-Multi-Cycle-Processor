@@ -33,10 +33,7 @@ module PC(
 			 o_PCcurr <= 13'b0000_000_000_000;
 			 #2 PCprev <= o_PCcurr;
 		end
-		else if((i_PCop == 13'b0000_000_000_000) && (reset == 1'b0))begin
-			o_PCcurr <= PCprev + 13'b0000_000_000_001;
-			#2 PCprev <= o_PCcurr;
-		end
+		else if((i_PCop == 13'b0000_000_000_000) && (reset == 1'b0)) o_PCcurr <= PCprev + 13'b0000_000_000_001;
 		else o_PCcurr <= i_PC + i_Branch;
 		
 	end			
